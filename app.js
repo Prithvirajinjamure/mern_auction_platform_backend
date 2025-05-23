@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 import { connection } from "./database/connection.js";
 import { errorMiddleware } from "./middlewares/error.js";
-import userRouter from "./router/userroutes.js";
+import userRouter from "./router/userRoutes.js";
 import auctionItemRouter from "./router/auctionitemroutes.js";
 import bidRouter from "./router/bidRoutes.js";
 import commissionRouter from "./router/commissionRouter.js";
