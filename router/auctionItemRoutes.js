@@ -1,6 +1,6 @@
 import { addNewAuction, getAllItems, 
     getAuctionDetails,getMyAuctionItems, 
-    removeFromAuction, republishItem } from "../controllers/auctionitemcontroller.js"
+    removeFromAuction, republishItem } from "../controllers/auctionitemController.js"
 import { isAuthenticated, isAuthorized } from "../middlewares/auth.js"
 import { trackCommissionStatus } from "../middlewares/trackCommissionStatus.js"
 import express from "express"
