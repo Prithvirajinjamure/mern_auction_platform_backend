@@ -6,7 +6,7 @@ import fileUpload from "express-fileupload";
 import { connection } from "./database/connection.js";
 import { errorMiddleware } from "./middlewares/error.js";
 import userRouter from "./router/userRoutes.js";
-import auctionItemRouters from "./router/auctionItemRouters.js";
+import auctionItemRoutes from "./router/auctionItemRoutes.js";
 import bidRouter from "./router/bidRoutes.js";
 import commissionRouter from "./router/commissionRouter.js";
 import  superAdminRouter from "./router/superAdminRoutes.js"; 
