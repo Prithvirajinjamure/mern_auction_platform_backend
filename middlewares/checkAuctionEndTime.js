@@ -15,11 +15,11 @@ export const checkAuctionEndTime = catchAsyncErrors(async(req,res,next)=>{
     }
     const now = new Date();
 
-    if(new Date(auction.startTime) < now){
+    if(new Date(auction.startTime) > now){
         return next(new ErrorHandler("Auction has not started yet",400));
     }
 
-    if(new Date(auction.endTime) > now){
+    if(new Date(auction.endTime) < now){
         return next(new ErrorHandler("Auction has ended",400));
     }
     next();
