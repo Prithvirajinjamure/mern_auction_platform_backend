@@ -5,7 +5,7 @@ import cron from "node-cron";
 import { sendEmail } from "../utils/sendEmail.js";
 
 export const verifyCommissionCron = () => {
-  // Run every hour instead of every minute
+  // Run every minute to check for commission verifications
   cron.schedule("*/1 * * * *", async () => {
     console.log("Running Verify Commission Cron...");
 
