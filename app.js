@@ -6,10 +6,11 @@ import fileUpload from "express-fileupload";
 import { connection } from "./database/connection.js";
 import { errorMiddleware } from "./middlewares/error.js";
 import userRouter from "./router/userRoutes.js";
-import auctionItemRouter from "./router/auctionItemRoutes.js";
+import auctionItemRouter from "./router/auctionItemRoute.js";
 import bidRouter from "./router/bidRoutes.js";
 import commissionRouter from "./router/commissionRouter.js";
 import  superAdminRouter from "./router/superAdminRoutes.js"; 
+import emailTestRouter from "./router/emailTestRoutes.js";
 import {endedAuctionCron} from "./automation/endedAuctionCron.js"
 import {verifyCommissionCron } from "./automation/verifyCommissionCron.js";
 
@@ -20,7 +21,9 @@ config({
 
 
 app.use(cors({
-    origin:[process.env.FRONTEND_URL],
+    origin:["http://localhost:5173", "http://localhost:5174", "http://localhost:5175", process.env.FRONTEND_URL]
+    .filter(Boolean)
+    .map((o)=> typeof o === "string" ? o.trim() : o),
     methods:["POST", "GET", "PUT", "DELETE"],
      credentials: true,
 })
@@ -35,11 +38,12 @@ app.use(fileUpload({
 })
 );
 
-app.use("/api/v1/user", userRouter);
-app.use("/api/v1/auctionitem", auctionItemRouter);
-app.use("/api/v1/bid", bidRouter);
-app.use("/api/v1/commission", commissionRouter);
-app.use("/api/v1/superadmin", superAdminRouter);
+app.use("/api/v1/user",userRouter);
+app.use("/api/v1/auctionitem",auctionItemRouter);
+app.use("/api/v1/bid",bidRouter);
+app.use("/api/v1/commission",commissionRouter);
+app.use("/api/v1/superadmin",superAdminRouter);
+app.use("/api/v1/email-test",emailTestRouter);
 
 endedAuctionCron();
 verifyCommissionCron();
