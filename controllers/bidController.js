@@ -3,6 +3,7 @@ import ErrorHandler from "../middlewares/error.js";
 import { Auction } from "../models/auctionSchema.js";
 import { Bid } from "../models/bidSchema.js";
 import { User } from "../models/userSchema.js";
+import { emitBidUpdate } from "../socket/index.js";
 
 
 export const placeBid = catchAsyncErrors(async (req, res, next) => {
@@ -72,6 +73,17 @@ export const placeBid = catchAsyncErrors(async (req, res, next) => {
       auctionItem.currentBid = amount;
     }
     await auctionItem.save();
+
+    // Emit real-time update to clients in this auction room
+    try {
+      emitBidUpdate(auctionItem._id.toString(), {
+        auctionId: auctionItem._id,
+        currentBid: auctionItem.currentBid,
+        highestBidder: req.user._id,
+      });
+    } catch (e) {
+      // Non-fatal: socket may not be initialized in certain scripts/tests
+    }
 
     res.status(201).json({
       success: true,
