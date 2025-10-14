@@ -11,7 +11,8 @@ router.post("/create", isAuthenticated, isAuthorized("Auctioneer"),trackCommissi
 
 router.get("/allitems", getAllItems);
 
-router.get("/auction/:id", isAuthenticated, getAuctionDetails);
+// Make auction details public to allow viewing without authentication
+router.get("/auction/:id", getAuctionDetails);
 
 router.get("/myitems", isAuthenticated, isAuthorized("Auctioneer"), getMyAuctionItems);
 
