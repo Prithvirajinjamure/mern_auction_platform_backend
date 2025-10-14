@@ -76,10 +76,17 @@ export const placeBid = catchAsyncErrors(async (req, res, next) => {
 
     // Emit real-time update to clients in this auction room
     try {
+      // Fetch bidder display info for UI updates without refetch
+      const bidder = await User.findById(req.user._id);
       emitBidUpdate(auctionItem._id.toString(), {
-        auctionId: auctionItem._id,
+        auctionId: auctionItem._id?.toString(),
         currentBid: auctionItem.currentBid,
-        highestBidder: req.user._id,
+        bid: {
+          userId: bidder?._id?.toString() || req.user._id?.toString(),
+          userName: bidder?.userName,
+          profileImage: bidder?.profileImage?.url,
+          amount,
+        },
       });
     } catch (e) {
       // Non-fatal: socket may not be initialized in certain scripts/tests
